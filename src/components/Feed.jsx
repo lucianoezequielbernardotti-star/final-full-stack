@@ -1,44 +1,35 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Cardheader from '@mui/material/CardHeader';
+import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 
 function Feed(props) {
 
     return (
-        <div style={style.feed}>
+        <div>
             <Card sx={{ maxWidth: 500 }}>
-              <Cardheader title={props.product.name} style={style.title} />
+              <CardHeader title={props.product.name} />
               <CardMedia
                 component="img"
                 height="140"
-                image={props.product.image ? props.product.image : ''}
+                image={props.product.image ? props.product.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDN5oYPxAWzDeDqBjmcFv0C-t1N_PwGhJEdQ&s'}
                 alt={props.product.name}
               />
               <CardContent>
-                <Typography variant="body2" color="text.secondary" style={style.detail}>
+                <Typography variant="body2" color="text.secondary">
                   {props.product.description}
+                  <br />
+                  {props.product.catalog ? props.product.catalog : 'Sin categoría'}
                 </Typography>
-                <span>{props.product.price}</span>
+                <span>Precio: {props.product.price}</span>
+                <br />
+                <span>Stock: {props.product.stock}</span>
               </CardContent>
             </Card>
         </div>
     );
 }
-const style = {
-    feed: {
-        backgroundColor: '#eee',
-        border: '1px solid #ccc',
-        margin: 10,
-        width: 500
-    },
-    title: {
-        fontSize: 24
-    },
-    detail: {
-        fontSize: 18
-    }
-}
+
 export default Feed;
