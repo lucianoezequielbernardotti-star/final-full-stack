@@ -1,11 +1,10 @@
 import Feed from "../components/Feed";
 import { GetAllProducts } from "../Api/producs-api";
 import { useEffect, useState } from "react";
-import { Button, Container, Grid, Divider, TextField } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
+import { Button, Container, Grid, TextField } from "@mui/material";
 
 
-export function HomePage() {
+export default function HomePage() {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -21,6 +20,10 @@ export function HomePage() {
     });
   };
 
+   const handleFilter = () => {
+    searchTerm ? fetchProducts(searchTerm) : fetchProducts();
+  };
+
   return (
     <Container>
       <TextField
@@ -29,7 +32,7 @@ export function HomePage() {
         onChange={(e) => setSearchTerm(e.target.value)}
       >
       </TextField>
-      <Button variant="contained" onClick={() => fetchProducts(searchTerm)}>
+      <Button variant="contained" onClick={handleFilter} sx={{ ml: 2, marginTop:1.3 }}>
         Buscar
       </Button>
       <Grid container spacing={2} justifyContent="center">
