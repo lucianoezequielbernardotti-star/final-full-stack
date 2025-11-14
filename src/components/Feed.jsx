@@ -1,14 +1,17 @@
-import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
+import { IconButton, Tooltip } from '@mui/material';
+import { useCart } from '../context/cart-context';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 function Feed(props) {
+    const { addToCart } = useCart();
 
     return (
-        <div>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "30px" }}>
             <Card sx={{ maxWidth: 500 }}>
               <CardHeader title={props.product.name} />
               <CardMedia
@@ -26,6 +29,11 @@ function Feed(props) {
                 <span>Precio: {props.product.price}</span>
                 <br />
                 <span>Stock: {props.product.stock}</span>
+                <Tooltip title='Añadir al carrito'>
+                  <IconButton onClick={() => addToCart(props.product)} color="primary" aria-label='añadir al carrito'>
+                    <AddShoppingCartIcon />
+                  </IconButton>
+                </Tooltip>
               </CardContent>
             </Card>
         </div>

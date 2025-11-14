@@ -1,8 +1,11 @@
 import { AppBar, Button, Container, Divider, IconButton, Toolbar, Typography, Link} from '@mui/material';
+import Cart from './Cart';
+
+
 const Header = () => {
     return (
         <div>
-            <AppBar position="static">
+            <AppBar position="fixed">
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Tienda deportiva Pechoius
@@ -29,15 +32,9 @@ const Header = () => {
                                         </Typography>
                                     </Button>
                                 </Link>
-                                <Link to="/about" color='inherit'>
-                                    <Button onClick={() => {window.location.href = '/about'}} color='inherit' aria-label='About' variant='contained' sx={{ justifyContent: 'space-between', mx: 1, backgroundColor: 'green' }}>
-                                        <Typography variant="body1">
-                                            Acerca de
-                                        </Typography>
-                                    </Button>
-                                </Link>
+                                <Cart />
                     </Container>
-                    <IconButton color='inherit' aria-label='Admin Access'>
+                    <IconButton onClick={() => {window.location.href = '/panel'}} color='inherit' aria-label='Admin Access'>
                         <Typography variant="body1" sx={{ pr: 1 }}>
                             Admin
                         </Typography>

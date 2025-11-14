@@ -7,16 +7,20 @@ import { Button, Container, Grid, TextField } from "@mui/material";
 export default function HomePage() {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
   const fetchProducts = (param) => {
+    setLoad(true);
     GetAllProducts(param).then((response) => {
       setProducts(response.data);
+      setLoad(false);
     }).catch((err) => {
       console.error('Error fetching products', err);
+      setLoad(false);
     });
   };
 
