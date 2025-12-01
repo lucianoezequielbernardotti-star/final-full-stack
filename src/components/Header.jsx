@@ -1,4 +1,4 @@
-import { AppBar, Button, Container, Divider, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, Button, Container, Divider, Toolbar, Typography } from '@mui/material';
 import Cart from './Cart';
 import { useAuth } from '../context/auth-context';
 import { useNavigate } from 'react-router-dom';

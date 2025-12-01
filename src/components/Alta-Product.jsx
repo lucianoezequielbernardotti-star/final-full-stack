@@ -4,6 +4,7 @@ import { CreateProduct} from '../Api/producs-api'
 
 
 function AltaProduct(props) {
+    const token = localStorage.getItem('token');
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
         setOpen(true);
@@ -31,7 +32,7 @@ function AltaProduct(props) {
     const handleProductSubmit = (e) => {
         e.preventDefault();
         CreateProduct(product).then((response) => {
-            if (response.data) {
+            if (response.data && token) {
                 alert('Producto creado con éxito');
                 setOpen(false);
                 props.fetchProducts()

@@ -1,7 +1,9 @@
 import AltaProduct from "../components/Alta-Product";
-import { GetAllProducts } from "../Api/producs-api";
+import { GetAllProducts, RemoveProduct, UpdateProduct } from "../Api/producs-api";
 import { useEffect, useState } from 'react';
-import { Table, TableContainer, Container, TableCell, TableHead, TableRow, Avatar, TableBody } from '@mui/material';
+import { Table, TableContainer, Container, TableCell, TableHead, TableRow, Avatar, TableBody, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 function PanelPage() {
 
@@ -23,11 +25,24 @@ function PanelPage() {
         });
     };
 
+    const handleRemoveProduct = (_id) => {
+        RemoveProduct(_id).then(() => {
+            fetchProducts();
+        }).catch((err) => {
+            console.error('Error removing product', err);
+        });
+    };
+
+    const preHandleRemoveProduct = (_id) => {
+        if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+            handleRemoveProduct(_id);
+        }
+    };
 
     return (
         <Container>
             <AltaProduct fetchProducts={fetchProducts} />
-            <Table aria-label="simple table">
+            <Table aria-label="table">
                 <TableContainer>
                     <TableHead>
                         <TableRow>
@@ -41,14 +56,21 @@ function PanelPage() {
                     <TableBody>
                         {products.map((row) => (
                             <TableRow
-                                key={row.id}
+                                key={row._id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell><Avatar src={row.image} alt={row.name} /></TableCell>
                                 <TableCell sx={{fontWeight: '800'}} component="th" scope="row">{row.name}</TableCell>
                                 <TableCell align="right">${row.price}</TableCell>
                                 <TableCell align="right">{row.catalog}</TableCell>
-                                <TableCell align="right">Acciones</TableCell>
+                                <TableCell align="right">
+                                    <IconButton>
+                                        <EditIcon sx={{ cursor: 'pointer', marginRight: 2, color: 'blue' }} />
+                                    </IconButton>
+                                    <IconButton onClick={() => { preHandleRemoveProduct(row._id) }}>
+                                        <DeleteIcon sx={{ cursor: 'pointer', color: 'red' }}  />
+                                    </IconButton>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
