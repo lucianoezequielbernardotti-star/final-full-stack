@@ -1,5 +1,6 @@
-import { Container, FormLabel, Input } from "@mui/material";
-import { useState, useEffect } from "react";
+import { Container, FormLabel, Input, Snackbar, Alert} from "@mui/material";
+import { useState } from "react";
+import emailjs from 'emailjs-com';
 
 
 
@@ -12,8 +13,33 @@ const ContactPage = () => {
         mensaje: ''
     });
 
-    function handleSubmit() {
-        alert(`Gracias por contactarnos, ${contact.nombre} ${contact.apellido}. Te responderemos pronto al correo: ${contact.email}`);
+    const [open, setOpen] = useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    function handleSubmit(e) {
+        //param 1: service ID ('service_yv06b7q')
+        //param 2: template ID ('template_dumfby8')
+        //param 3: form (e.target)
+        //param 4: public key ('xjwm773xkdE6jFpLA')
+        emailjs.sendForm('service_yv06b7q', 'template_dumfby8', e.target, 'xjwm773xkdE6jFpLA').then((result) => {
+            console.log(result.text);
+            if (result.text === 'OK') {
+                setOpen(true);
+                setContact({
+                    nombre: '',
+                    apellido: '',
+                    email: '',
+                    mensaje: ''
+                });
+            }
+        }, (error) => {
+            console.log(error.text);
+            alert('Error al enviar el mensaje, por favor intenta de nuevo.');
+        });
+        e.preventDefault();
     }
 
     const handleChange = (e) => {
@@ -58,6 +84,16 @@ const ContactPage = () => {
                 }} />
                 <br />
                 <button type="submit">Enviar</button>
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert
+                        onClose={handleClose}
+                        severity="success"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        Mensaje enviado con exito!
+                    </Alert>
+                </Snackbar>
             </form>
         </Container >
     );
